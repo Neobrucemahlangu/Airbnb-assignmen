@@ -1,0 +1,23 @@
+.reservations-page {
+  padding: 2rem;
+}
+
+.reservation-card {
+  display: flex;
+  gap: 1rem;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.reservation-card img {
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.reservation-card .info {
+  flex: 1;
+}
