@@ -6,8 +6,6 @@ import accommodationRoutes from "./routes/accommodationRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import reservationRoutes from "./routes/reservationRoutes.js";
 import listingRoutes from "./routes/listingRoutes.js";
-import reservationRoutes from "./routes/reservationRoutes.js";
-
 
 dotenv.config();
 
@@ -26,7 +24,6 @@ app.use("/api/accommodations", accommodationRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/listings", listingRoutes);
-app.use("/api/reservations", reservationRoutes);
 
 // Default route
 app.get("/", (req, res) => {
@@ -43,6 +40,23 @@ mongoose
     console.error("MongoDB connection error:", err.message);
     process.exit(1);
   });
+
+// ------------------------
+// ✅ Serve React frontend build in production
+// ------------------------
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+  });
+}
 
 // ------------------------
 // ✅ Start Server
