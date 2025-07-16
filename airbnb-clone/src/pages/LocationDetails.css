@@ -1,0 +1,63 @@
+.details-page {
+  padding: 30px;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.main-img {
+  width: 60%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.small-imgs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 40%;
+}
+
+.small-imgs img {
+  height: 125px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  gap: 30px;
+}
+
+.left-info {
+  flex: 2;
+}
+
+.right-cost {
+  flex: 1;
+}
+
+.cost-box {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #f7f7f7;
+}
+
+.reserve-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
