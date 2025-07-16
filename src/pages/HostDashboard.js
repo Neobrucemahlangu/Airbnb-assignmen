@@ -1,18 +1,25 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./HostDashboard.css";
 
 const HostDashboard = () => {
+  const navigate = useNavigate();
   const [listings, setListings] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // get token from localStorage userInfo 
+  const getToken = () => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    return userInfo?.token || localStorage.getItem("token");
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = getToken();
 
         const [listingsRes, reservationsRes] = await Promise.all([
           axios.get("/api/listings/host", {
@@ -40,7 +47,7 @@ const HostDashboard = () => {
 
     try {
       await axios.delete(`/api/listings/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${getToken()}` },
       });
       setListings((prev) => prev.filter((listing) => listing._id !== id));
     } catch (err) {
@@ -61,7 +68,7 @@ const HostDashboard = () => {
           {listings.map((listing) => (
             <div key={listing._id} className="listing-card">
               <img
-                src={listing.images?.[0] || ""}
+                src={listing.imageUrls?.[0] || ""}
                 alt={listing.title}
                 className="listing-image"
               />
@@ -69,9 +76,20 @@ const HostDashboard = () => {
                 <h3>{listing.title}</h3>
                 <p>{listing.location}</p>
                 <p>R{listing.price} / night</p>
-                <button onClick={() => handleDeleteListing(listing._id)} className="delete-btn">
-                  Delete
-                </button>
+                <div className="listing-actions">
+                  <button
+                    onClick={() => navigate(`/admin/edit-listing/${listing._id}`)}
+                    className="edit-btn"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteListing(listing._id)}
+                    className="delete-btn"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -102,3 +120,4 @@ const HostDashboard = () => {
 };
 
 export default HostDashboard;
+

@@ -1,38 +1,37 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cors from "cors"; // If you're calling this from frontend, include this!
+import cors from "cors";
+
 import accommodationRoutes from "./routes/accommodationRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import reservationRoutes from "./routes/reservationRoutes.js";
 import listingRoutes from "./routes/listingRoutes.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
 dotenv.config();
+console.log("MONGO_URI from .env:", process.env.MONGO_URI);
 
 const app = express();
 
-// ------------------------
-// ✅ Middleware Section
-// ------------------------
+// Middleware
 app.use(express.json());
-app.use(cors()); // Optional but recommended for React frontend
+app.use(cors());
 
-// ------------------------
-// ✅ Routes
-// ------------------------
+// Routes
 app.use("/api/accommodations", accommodationRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/listings", listingRoutes);
 
-// Default route
+// Default API root
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// ------------------------
-// ✅ MongoDB Connection
-// ------------------------
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
@@ -41,11 +40,6 @@ mongoose
     process.exit(1);
   });
 
-// ------------------------
-// ✅ Serve React frontend build in production
-// ------------------------
-import path from "path";
-import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -58,10 +52,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// ------------------------
-// ✅ Start Server
-// ------------------------
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+

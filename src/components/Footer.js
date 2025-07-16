@@ -46,7 +46,7 @@ const Footer = () => {
         <p>© {new Date().getFullYear()} Airbnb clone</p>
         <div className="footer-icons">
           <span>🌍 English (ZA)</span>
-          <span>R ZAR</span>
+          
         </div>
       </div>
     </footer>

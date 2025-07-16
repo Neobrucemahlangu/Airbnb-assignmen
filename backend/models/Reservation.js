@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const reservationSchema = new mongoose.Schema({
-  listing: { // renamed to match frontend 'listing'
+  listing: { 
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Listing",  // your listing model name
+    ref: "Listing",  
     required: true,
   },
   user: {
