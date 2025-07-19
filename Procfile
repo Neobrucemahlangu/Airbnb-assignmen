@@ -1,1 +1,1 @@
-/workspaces/Airbnb-assignmen/airbnb-clone/Procfile
+web: npm start
